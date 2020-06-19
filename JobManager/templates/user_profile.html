@@ -1,0 +1,89 @@
+{% extends "index.html" %}
+{% block content %}
+
+{% block title %}<title>User Profile</title>{% endblock %}
+    <section id="top_banner">
+        <div class="banner">
+            <div class="inner text-center">
+                <h2>User profile for {{ user.username }}</h2>
+            </div>
+        </div>
+        <div class="page_info">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <h4>User Profile</h4>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-6" style="text-align:right;">Home<span class="sep"> 	/ </span><span class="current">User_profile for {{ user.username }}</span></div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        </section>
+        <section id="about-page-section-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7 text-align">
+                            <div class="section-heading">
+                                <h2>{{ user.username }}</h2>
+                                <h1>Web Developer</h1>
+                                <h4>Los Angles, California</h4>
+                                <img src="{{user.picture}}">
+                                <p class="subheading">Check out his/her profile. Want to contact him? Contact him at {{user.email}}</p>
+                            </div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Contact
+</button>                            <button class="btn btn-primary" type="button">Resume File</button>
+                            <h1>About</h1>
+                            <p><{{user.description}}</p>
+                            <h4>Skills:</h4>
+                            <p>Miusov, as a man man of breeding and deilcacy, could not but feel some inwrd qualms, when he reached the Father Superior's with Ivan: he felt ashamed of havin lost his temper. He felt that he ought to have disdaimed that despicable wretch, Fyodor Pavlovitch, too much to have been upset by him in Father Zossima's cell, and so to have forgotten himself. "Teh monks were not to blame, in any case," he reflceted, on the steps. "And if they're decent people here (and the Father Superior, I understand, is a nobleman) why not be friendly and courteous withthem? I won't argue, I'll fall in with everything, I'll win them by politness, and show them that I've nothing to do with that Aesop, thta buffoon, that Pierrot, and have merely been takken in over this affair, just as they have."
+</p>
+                            <h1>Experience</h1>
+                                <p>{{ user.experience }}</p>
+                            <h1>Education</h1>
+                        </div>
+                    </div>
+                </div>
+        </section>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Contact</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>To contact {{user.username}} email {{user.email}}. </p>
+          <p>Contact using webmail: <a href="https://www.gmail.com">Gmail</a></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</style>
+<link rel='stylesheet' id='select2-css'  href='https://c0.wp.com/p/woocommerce/3.7.0/assets/css/select2.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-job-manager-frontend-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager/assets/css/frontend.css?ver=1.33.5' type='text/css' media='all' />
+<link rel='stylesheet' id='job-alerts-frontend-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-alerts/assets/css/frontend.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='jquery-ui-css'  href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css?ver=1.11.4' type='text/css' media='all' />
+<link rel='stylesheet' id='jm-application-deadline-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-application-deadline/assets/css/frontend.css?ver=1.0' type='text/css' media='' />
+<link rel='stylesheet' id='wp-job-manager-applications-frontend-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-applications/assets/css/frontend.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='embeddable-job-widget-frontend-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-embeddable-job-widget/assets/css/frontend.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='job-manager-indeed-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-indeed-integration/assets/css/frontend.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-job-manager-resume-frontend-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-resumes/assets/css/frontend.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-job-manager-tags-frontend-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-tags/assets/css/style.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-paid-listings-packages-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-wc-paid-listings/assets/css/packages.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='job-manager-ziprecruiter-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/plugins/wp-job-manager-ziprecruiter-integration/assets/css/frontend.css?ver=5.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='storefront-style-css'  href='https://demo-wcpl.wpjobmanager.com/wp-content/themes/storefront/style.css?ver=2.5.0' type='text/css' media='all' />
+<style id='storefront-style-inline-css' type='text/css'>
+{% endblock content %}
+

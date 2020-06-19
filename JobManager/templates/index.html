@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" sizes="87x87"href="static/img/capture.JPG">
+    {% block title %}<title>Home</title>{% endblock %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/skin.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="static/js/index.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body id="wrapper">
+
+    <section id="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-sm-7 col-xs-7 top-header-links">
+                    <ul class="contact_links">
+                        <li><i class="fa fa-phone"></i><a href="#">+404 761 9789</a></li>
+                        <li><i class="fa fa-envelope"></i><a target="_blank" href="https://www.gmail.com">babhinav.117@gmail.com</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-5 col-sm-5 col-xs-5 social">
+                    <ul class="social_links">
+                        <li><a target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+                        <li><a target="_blank" href="https://twitter.com/login"><i class="fa fa-twitter"></i></a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/?hl=en"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a target="_blank" href="https://www.pinterest.com/login/"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a target="_blank" href="https://accounts.snapchat.com/accounts/login?continue=https%3A%2F%2Faccounts.snapchat.com%2Faccounts%2Fwelcome"><i class="fa fa-skype"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    <header>
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="row">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+                        <a class="navbar-brand" href="{{ url_for('index') }}">
+                            <h1>Thermos</h1><span>Where Job Seekers and Hires Come</span></a>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse navbar-right">
+                        <ul class="nav navbar-nav">
+                        {% if current_user.is_authenticated %}
+                            <li><a href="{{ url_for('index') }}">Home</a></li>
+                            <li><a href="{{ url_for('features') }}">Plans</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                            <li><a href="{{ url_for('all_jobs') }}">All Jobs</a></li>
+                            <li><a href="{{ url_for('post_job') }}">Post Job</a></li>
+                            <li><a href="{{ url_for('candidates') }}">Candidates</a></li>
+                            <!-- User Menu -->
+  <li class='dropdown'>
+    <a aria-expanded='false' aria-haspopup='true' class='fedora-navbar-link navbar-link dropdown-toggle open-my-profile-dropdown' data-toggle='dropdown'>
+  <img class='gravatar' src='https://s.gravatar.com/avatar/27fcb1bbabe658bb50b28928e4a5066f?d=mm' width="30" height="30" alt="jerfgertha3@gmail.com">
+</a>
+<ul class='dropdown-menu'>
+  <li class='user-profile'>
+    <a href="{{url_for('account') }}">
+      Edit Profile
+    </a>
+  </li>
+  <li>
+    <a href="{{url_for('account') }}">
+      Manage Subscriptions
+    </a>
+  </li>
+  <li>
+    <a href="{{ url_for('credit_card') }}">
+      Add / Change Credit Card
+    </a>
+  </li>
+  <li class='user-signout'>
+    <a href="{{url_for('logout')}}">
+      Log Out
+    </a>
+  </li>
+</ul>
+
+  </li>
+
+</ul>
+                        {% else %}
+                            <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+                            <li><a href="{{ url_for('features') }}">Plans</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                            <li><a href="{{ url_for('all_jobs') }}">All Jobs</a></li>
+                            <li><a href="{{ url_for('login') }}">Sign In</a></li>
+                            <li><a href="{{ url_for('registration') }}">Sign Up</a></li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!--/.nav-ends -->
+            <div class="col-md-8">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+{% block content %}
+    <div id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="fill" style="background-image:url('img/banner-slide-1.jpg');"></div>
+                <div class="carousel-caption slide-up">
+                    <h1 class="banner_heading">Providing The <span>Best</span> Jobs and Candidates</h1>
+                    <p class="banner_txt">{% if current_user.is_authenticated %}Thermos provides many job posting and seeking opportunities. Browse through jobs and candidates to find the perfect fit for you. Click below to start browsing or posting. {% else %}Thermos provides many job posting and seeking opportunities. Browse through jobs and candidates to find the perfect fit for you. Sing in or Sign up to get started. {% endif%}</p>
+                    <div class="slider_btn">
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('all_jobs') }}"><button type="button" class="btn btn-default slide">View Jobs <i class="fa fa-caret-right"></i></button></a>
+                            <a href="{{ url_for('post_job') }}"><button type="button" class="btn btn-default slide">Post Job <i class="fa fa-caret-right"></i></button></a>                        {% else %}
+                        ...
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="fill" style="background-image:url('img/banner-slide-2.jpg');"></div>
+                <div class="carousel-caption slide-up">
+                    <h1 class="banner_heading">Providing The <span>Highest </span>Lorem</h1>
+                    <p class="banner_txt">Lorem ipsum dolor sit amet sit legimus copiosae instructior eiut vix denique fierentis ea saperet inimicu utqui dolor oratio mnesarchum.</p>
+                    <div class="slider_btn">
+                        <button type="button" class="btn btn-default slide">Learn More <i class="fa fa-caret-right"></i></button>
+                        <button type="button" class="btn btn-primary slide">Learn More <i class="fa fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="fill" style="background-image:url('img/banner-slide-3.jpg');"></div>
+                <div class="carousel-caption slide-up">
+                    <h1 class="banner_heading">Providing The <span>Highest </span>Lorem</h1>
+                    <p class="banner_txt">Lorem ipsum dolor sit amet sit legimus copiosae instructior eiut vix denique fierentis ea saperet inimicu utqui dolor oratio mnesarchum.</p>
+                    <div class="slider_btn">
+                        <button type="button" class="btn btn-default slide">Learn More <i class="fa fa-caret-right"></i></button>
+                        <button type="button" class="btn btn-primary slide">Learn More <i class="fa fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+        </a>
+
+    </div>
+
+    <section id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-xs-12 block">
+                    <div class="col-md-2 col-xs-2"><i class="fa fa-laptop feature_icon"></i></div>
+                    <div class="col-md-10 col-xs-10">
+                        <h4>Our team</h4>
+                        <p>Our website wouldn't be possible without our team. Click read more to find out more about our amazing team of experts.</p>
+                        <a href="{{ url_for('about') }}" class="readmore">Read More <i class="fa fa-caret-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12 block">
+                    <div class="col-md-2 col-xs-2"><i class="fa fa-bullhorn feature_icon"></i></div>
+                    <div class="col-md-10 col-xs-10">
+                        <h4>Powerful Features</h4>
+                        <p>Our website provides comfort for our users. Our website offers the best experience. Click read more to find out more of these premium features and comforts.</p>
+                        <a href="{{ url_for('features') }}" class="readmore">Read More <i class="fa fa-caret-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-12 block">
+                    <div class="col-md-2 col-xs-2"><i class="fa fa-support feature_icon"></i></div>
+                    <div class="col-md-10 col-xs-10">
+                        <h4>Customer Support</h4>
+                        <p>Have any questions? Check the FAQ section to see if the answer to your question is there. Checked already and found out that your question is not there? Visit the contact section and drop a comment. We'll respond back to you in 30 days time.</p>
+                        <a href="{{ url_for('faq') }}" class="readmore">Read More <i class="fa fa-caret-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="about">
+        <div class="image-holder col-lg-6 col-md-6 col-sm-6 col-xs-12 pull-left">
+            <div class="background-imgholder">
+                <img src="static/img/1.jpg" alt="about" class="img-responsive" style="display:none;" />
+            </div>
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="col-md-7 col-md-offset-5 col-sm-8 col-sm-offset-2 col-xs-12 text-inner ">
+                <div class="text-block">
+                    <div class="section-heading">
+                        <h1>ABOUT <span>US</span></h1>
+                        <p class="subheading">Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut.</p>
+                    </div>
+
+                    <ul class="aboutul">
+                        <li> <i class="fa fa-check"></i>Provides user perks and benefits if signed up with us.</li>
+                        <li> <i class="fa fa-check"></i>Provides hundreds of job opportunities posted by other users.</li>
+                        <li> <i class="fa fa-check"></i>Provides candidates for browsing to find the right hire for you company.</li>
+                        <li> <i class="fa fa-check"></i>Access to job posting to find your hire.</li>
+                        <li> <i class="fa fa-check"></i>Theme settings to suite your taste.</li>
+                        <li> <i class="fa fa-check"></i>User testimonials for you to tell others about your amazing experience.</li>
+                    </ul>
+
+                    <a href="{{ url_for('about') }}"><button type="button" class="btn btn-primary slide">Learn More  <i class="fa fa-caret-right"></i> </button></a>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="process">
+        <div class="container">
+            <div class="section-heading text-center">
+                <div class="col-md-12 col-xs-12">
+                    <h1>What <span>We Do</span></h1>
+                    <p class="subheading">Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum ea utamur impetus fuisset nam nostrud euismod volumus ne mei.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-6 block process-block">
+                    <div class="process-icon-holder">
+                        <div class="process-border">
+                            <span class="process-icon"><a href="#"><i class="fa fa-lightbulb-o feature_icon"></i></a></span></div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="process-text-block">
+                        <h4><a href="#">Idea</a></h4>
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 block process-block">
+                    <div class="process-icon-holder">
+                        <div class="process-border">
+                            <span class="process-icon"><a href="#"><i class="fa fa-cloud-download feature_icon"></i></a></span></div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="process-text-block">
+                        <h4><a href="#">Concept</a></h4>
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 block process-block">
+                    <div class="process-icon-holder">
+                        <div class="process-border">
+                            <span class="process-icon"><a href="#"><i class="fa fa-magic feature_icon"></i></a></span></div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="process-text-block">
+                        <h4><a href="#">Design</a></h4>
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 block process-block lastchild">
+                    <div class="process-icon-holder">
+                        <div class="process-border">
+                            <span class="process-icon"><a href="#"><i class="fa fa-cog feature_icon"></i></a></span></div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="process-text-block">
+                        <h4><a href="#">Develop</a></h4>
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section id="testimonial">
+        <div class="container">
+            <div class="section-heading text-center">
+                <div class="col-md-12 col-xs-12">
+                    <h1>What Our <span>Client Says</span></h1>
+                    <p class="subheading">Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum ea utamur impetus fuisset nam nostrud euismod volumus ne mei.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-12 block ">
+                    <div class="testimonial_box">
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum ea utamur impetus fuisset. </p>
+                    </div>
+                    <div class="arrow-down"></div>
+                    <div class="testimonial_user">
+                        <div class="user-image"><img src="static/img/user1.png" alt="user" class="img-responsive" /></div>
+                        <div class="user-info">
+                            <h5>Lorem Ipsum</h5>
+                            <p>Manager</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 col-sm-12 block">
+                    <div class="testimonial_box">
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum ea utamur impetus fuisset. </p>
+                    </div>
+                    <div class="arrow-down"></div>
+                    <div class="testimonial_user">
+                        <div class="user-image"><img src="static/img/user1.png" alt="user" class="img-responsive" /></div>
+                        <div class="user-info">
+                            <h5>Lorem Ipsum</h5>
+                            <p>Manager</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12 block">
+                    <div class="testimonial_box">
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum ea utamur impetus fuisset. </p>
+                    </div>
+                    <div class="arrow-down"></div>
+                    <div class="testimonial_user">
+                        <div class="user-image"><img src="static/img/user1.png" alt="user" class="img-responsive" /></div>
+                        <div class="user-info">
+                            <h5>Lorem Ipsum</h5>
+                            <p>Manager</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </section>
+{% endblock content %}
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the chat form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup chat - hidden by default */
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 200px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<button class="open-button" onclick="openForm()">Chat</button>
+
+<div class="chat-popup" id="myForm">
+  <div class="form-container">
+    <h1>Chat</h1>
+
+    <label for="msg"><b>Message</b></label>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var socket = io.connect('http://127.0.0.1:5000');
+        socket.on('connect', function() {
+            socket.send('User has connected!');
+        });
+        socket.on('message', function(msg) {
+            $("#messages").append('<li>'+msg+'</li>');
+            console.log('Received message');
+        });
+        $('#sendbutton').on('click', function() {
+            socket.send($('#myMessage').val());
+            $('#myMessage').val('');
+        });
+    });
+    </script>
+    <ul id="messages"></ul>
+    <input type="text" id="myMessage">
+    <button class="btn" id="sendbutton">Send</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </div>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+
+
+
+    <section id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 block">
+                    <div class="footer-block">
+                        <h4>Address</h4>
+                        <hr/>
+                        <p>Lorem ipsum dolor sit amet sit legimus copiosae instructior ei ut vix denique fierentis ea saperet inimicu ut qui dolor oratio mnesarchum.
+                        </p>
+                        <a href="#" class="learnmore">Learn More <i class="fa fa-caret-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-xs-12 block">
+                    <div class="footer-block">
+                        <h4>Useful Links</h4>
+                        <hr/>
+                        <ul class="footer-links">
+                            {% if current_user.is_authenticated %}
+                                <li><a href="{{ url_for('about') }}">About Us</a></li>
+                                <li><a href="{{ url_for('features') }}">Features</a></li>
+                                <li><a href="{{ url_for('candidates') }}">Candidates</a></li>
+                                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('about') }}">About Us</a></li>
+                                <li><a href="{{ url_for('features') }}">Features</a></li>
+                                <li><a href="{{ url_for('candidates') }}">Candidates</a></li>
+                                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                                <li><a href="{{ url_for('login') }}">Sign In</a></li>
+                                <li><a href="{{ url_for('registration') }}">Sign Up</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-3 col-xs-12 block">
+                    <div class="footer-block">
+                        <h4>Community</h4>
+                        <hr/>
+                        <ul class="footer-links">
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Forum</a></li>
+                            <li><a href="#">Free Goods</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </section>
+
+    <section id="bottom-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 btm-footer-links">
+                    <a href="https://app.termly.io/document/privacy-policy/f7ebbc6b-0345-4a01-986f-a76c7f36dfa7">Privacy Policy</a>
+                    <a href="{{ url_for('termsofuse') }}">Terms of Use</a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 copyright">
+                    Developed by <a href="#">Software Wizard</a> designed by <a href="#">Abhinav Bansal</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="panel">
+        <div id="panel-admin">
+            <div class="panel-admin-box">
+                <div id="tootlbar_colors">
+                    <button class="color" style="background-color:#1abac8;" onclick="mytheme(0)"></button>
+                    <button class="color" style="background-color:#ff8a00;" onclick="mytheme(1)"> </button>
+                    <button class="color" style="background-color:#b4de50;" onclick="mytheme(2)"> </button>
+                    <button class="color" style="background-color:#e54e53;" onclick="mytheme(3)"> </button>
+                    <button class="color" style="background-color:#1abc9c;" onclick="mytheme(4)"> </button>
+                    <button class="color" style="background-color:#159eee;" onclick="mytheme(5)"> </button>
+                </div>
+            </div>
+
+        </div>
+        <a class="open" href="#"><span><i class="fa fa-gear fa-spin"></i></span></a>
+    </div>
+
+</html>

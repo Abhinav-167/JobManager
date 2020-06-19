@@ -1,0 +1,77 @@
+{% extends "index.html" %}
+{% block content %}
+
+{% block title %}<title>My Profile</title>{% endblock %}
+    <section id="top_banner">
+        <div class="banner">
+            <div class="inner text-center">
+                <h2>Check out what you look like.</h2>
+            </div>
+        </div>
+        <div class="page_info">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-6">
+                        <h4>My Account</h4>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-6" style="text-align:right;">Home<span class="sep"> 	/ </span><span class="current">My Account</span></div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        </section>
+        <section id="about-page-section-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7 text-align">
+                            <div class="section-heading">
+                                <h2>Hi {{current_user.username }}</h2>
+                                <img src="{{current_user.picture}}">
+                                <p class="subheading">Check out your account. Want to update anything? CLick the update button to update your account to show accurate information about you.</p>
+                            </div>
+                            <p>Member type: normal</p>
+                            <p>Subscriptions: None</p>
+                            <p>Current Email: {{current_user.email}}</p>
+                            <p>My Description: </p>
+                            <p>
+                                {{ current_user.description }}
+
+                            </p>
+                            <p>My Experience</p>
+                            <p>{{ current_user.experience }}</p>
+                        </div>
+                    </div>
+                    <h1>Your Bookmarks</h1>
+                </div>
+        </section>
+        {% for job in jobs %}
+            <section id="about-page-section-3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7 text-align">
+                                <div class="section-heading">
+                                    <h2>{{ job.title }}</h2>
+                                    <p class="subheading">Posted by {{ job.author }} on {{ job.date_posted.strftime('%Y-%m-%d') }}</p>
+                                </div>
+                                <p>
+                                    {{ job.job_content }}
+
+                                    {{ job_experience }}
+
+                                </p>
+                                <a href="{{ url_for('apply', job_id=job.id) }}"><button type="button" class="btn btn-primary slide">Apply <i class="fa fa-caret-right"></i></button></a>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-5">
+                                <img height="" width="auto" src="img/iphone62.png" class="attachment-full img-responsive" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+    {% else %}
+        <center>                <p>You do not have any bookmarks currently.</p>
+</center>
+    {% endfor %}
+
+
+{% endblock content %}
